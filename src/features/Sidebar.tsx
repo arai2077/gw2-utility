@@ -1,7 +1,6 @@
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { NavLink } from "react-router";
@@ -20,20 +19,16 @@ export const Sidebar = () => {
       />
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink>
-            <NavLink to="/" className="flex items-center gap-2">
-              <Home className="w-4 h-4" />
-              Home
-            </NavLink>
-          </NavigationMenuLink>
+          <NavLink to="/" className="flex items-center gap-2">
+            <Home className="w-4 h-4" />
+            Home
+          </NavLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink>
-            <NavLink to="/treasury" className="flex items-center gap-2">
-              <Landmark className="w-4 h-4" />
-              Treasury
-            </NavLink>
-          </NavigationMenuLink>
+          <NavLink to="/treasury" className="flex items-center gap-2">
+            <Landmark className="w-4 h-4" />
+            Treasury
+          </NavLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

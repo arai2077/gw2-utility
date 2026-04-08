@@ -4,7 +4,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { NavLink } from "react-router";
-import { Home, Landmark } from "lucide-react";
+import { Home, Landmark, ArrowUpCircle } from "lucide-react";
 import gw2Logo from "@/assets/GW2_Logo.png";
 
 export const Sidebar = () => {
@@ -28,6 +28,12 @@ export const Sidebar = () => {
           <NavLink to="/treasury" className="flex items-center gap-2">
             <Landmark className="w-4 h-4" />
             Treasury
+          </NavLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavLink to="/upgrades" className="flex items-center gap-2">
+            <ArrowUpCircle className="w-4 h-4" />
+            Upgrades
           </NavLink>
         </NavigationMenuItem>
       </NavigationMenuList>

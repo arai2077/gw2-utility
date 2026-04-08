@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -14,6 +15,7 @@ export const Upgrades = () => {
   const upgrades = useUpgradesStore((s) => s.data);
   const loading = useUpgradesStore((s) => s.loading);
   const error = useUpgradesStore((s) => s.error);
+  const refresh = useTreasuryStore((s) => s.refresh);
   const items = useItemStore((s) => s.items);
   const itemMap = new Map(items?.map((i) => [i.id, i]));
 
@@ -25,7 +27,18 @@ export const Upgrades = () => {
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <h1 className="text-lg font-semibold">Upgrades</h1>
+      <div className="flex justify-items-center gap-2">
+        <h1 className="text-lg font-semibold">Upgrades</h1>
+        <Button
+          onClick={refresh}
+          disabled={loading}
+          className="p-1 rounded hover:text-foreground disabled:opacity-50 transition-colors cursor-pointer"
+          title="Refresh"
+        >
+          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />{" "}
+          Refresh
+        </Button>
+      </div>
       {loading && (
         <p className="flex items-center gap-2">
           <Loader2 className="animate-spin" size={16} />

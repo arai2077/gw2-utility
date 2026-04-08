@@ -110,7 +110,7 @@ export const Treasury = () => {
       {error && <p className="text-destructive">{error}</p>}
       {sortedData && items && (
         <TooltipProvider>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-3 w-full">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-3 w-full">
             {sortedData.map((treasuryItem) => {
               const item = itemMap.get(treasuryItem.item_id);
               const totalNeeded = treasuryItem.needed_by.reduce(

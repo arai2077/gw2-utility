@@ -1,3 +1,7 @@
+const DEV = import.meta.env.DEV;
+const API_KEY = import.meta.env.VITE_API_KEY;
+const GUILD_ID = import.meta.env.VITE_GUILD_ID;
+
 const cache = new Map<string, unknown>();
 
 export const clearCache = () => cache.clear();
@@ -14,7 +18,10 @@ const cached = async <T>(
 
 export const getGuildTreasury = async () =>
   cached("treasury", async () => {
-    const response = await fetch("/api/treasury");
+    const url = DEV
+      ? `/api/guild/${GUILD_ID}/treasury?access_token=${API_KEY}`
+      : "/api/treasury";
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Error fetching treasury: ${response.statusText}`);
     }
@@ -23,7 +30,10 @@ export const getGuildTreasury = async () =>
 
 export const getGuildUpgradeDetails = async (ids: number[]) =>
   cached(`upgrades:${[...ids].sort().join(",")}`, async () => {
-    const response = await fetch(`/api/upgrades?ids=${ids.join(",")}`);
+    const url = DEV
+      ? `/api/guild/upgrades?ids=${ids.join(",")}&access_token=${API_KEY}`
+      : `/api/upgrades?ids=${ids.join(",")}`;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Error fetching upgrade details: ${response.statusText}`);
     }
@@ -32,7 +42,8 @@ export const getGuildUpgradeDetails = async (ids: number[]) =>
 
 export const getItemDetails = async (ids: number[]) =>
   cached(`items:${[...ids].sort().join(",")}`, async () => {
-    const response = await fetch(`/api/items?ids=${ids.join(",")}`);
+    const url = `/api/items?ids=${ids.join(",")}`;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Error fetching item details: ${response.statusText}`);
     }

@@ -1,4 +1,10 @@
-import { Settings, Info, GitBranch, Landmark } from "lucide-react";
+import {
+  Settings,
+  Info,
+  GitBranch,
+  Landmark,
+  ArrowUpCircle,
+} from "lucide-react";
 import { NavLink } from "react-router";
 import { Button } from "@/components/ui/button";
 import comyEmblem from "@/assets/comy.png";
@@ -22,8 +28,8 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      <section className="flex border-t border-border text-left max-lg:flex-col max-lg:text-center">
-        <div className="p-8 max-lg:px-5 max-lg:py-6 border-r border-border max-lg:border-r-0 max-lg:border-b">
+      <section className="w-[50%] mx-auto flex border-t text-left max-lg:flex-col max-lg:text-center">
+        <div className="flex-1 p-8 max-lg:px-5 max-lg:py-6 border-r max-lg:border-r-0 max-lg:border-b">
           <Settings className="mb-4 w-[22px] h-[22px]" />
           <h2>Guild</h2>
           <p>Access the guild services</p>
@@ -33,6 +39,14 @@ export const Dashboard = () => {
                 <Button>
                   <Landmark className="w-[22px] h-[22px]" />
                   Treasury
+                </Button>
+              </NavLink>
+            </li>
+            <li className="max-lg:[flex:1_1_calc(50%-8px)]">
+              <NavLink to="/upgrades">
+                <Button>
+                  <ArrowUpCircle className="w-[22px] h-[22px]" />
+                  Upgrades
                 </Button>
               </NavLink>
             </li>
@@ -58,12 +72,6 @@ export const Dashboard = () => {
           </ul>
         </div>
       </section>
-
-      <div className="ticks"></div>
-      <section
-        id="spacer"
-        className="h-[88px] border-t border-border max-lg:h-12"
-      ></section>
     </div>
   );
 };

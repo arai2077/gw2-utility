@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,8 @@ import { useTreasuryStore } from "./store/treasuryStore";
 import { useUpgradesStore } from "./store/upgradesStore";
 import { useItemStore } from "./store/itemStore";
 
+type SortMode = "alphabetical" | "costs" | "level";
+
 export const Upgrades = () => {
   const upgrades = useUpgradesStore((s) => s.data);
   const loading = useUpgradesStore((s) => s.loading);
@@ -18,12 +20,36 @@ export const Upgrades = () => {
   const refresh = useTreasuryStore((s) => s.refresh);
   const items = useItemStore((s) => s.items);
   const itemMap = new Map(items?.map((i) => [i.id, i]));
+  const [sortMode, setSortMode] = useState<SortMode>("alphabetical");
 
   useEffect(() => {
     if (!upgrades) {
       useTreasuryStore.getState().fetchTreasury();
     }
   }, [upgrades]);
+
+  const sortedUpgrades = upgrades
+    ? [...upgrades].sort((a, b) => {
+        if (sortMode === "alphabetical") {
+          return (a.name ?? "").localeCompare(b.name ?? "");
+        }
+        if (sortMode === "costs") {
+          const costA = a.costs?.reduce((sum, c) => sum + c.count, 0) ?? 0;
+          const costB = b.costs?.reduce((sum, c) => sum + c.count, 0) ?? 0;
+          return costB - costA;
+        }
+        if (sortMode === "level") {
+          return (a.required_level ?? 0) - (b.required_level ?? 0);
+        }
+        return 0;
+      })
+    : null;
+
+  const sortOptions: { label: string; value: SortMode }[] = [
+    { label: "Alphabetical", value: "alphabetical" },
+    { label: "Material costs", value: "costs" },
+    { label: "Required level", value: "level" },
+  ];
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
@@ -46,10 +72,25 @@ export const Upgrades = () => {
         </p>
       )}
       {error && <p className="text-destructive">{error}</p>}
-      {upgrades && (
+      <div className="flex gap-2">
+        {sortOptions.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => setSortMode(opt.value)}
+            className={`px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer ${
+              sortMode === opt.value
+                ? "bg-primary text-primary-foreground border-primary"
+                : "border-border text-muted-foreground hover:border-foreground"
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+      {sortedUpgrades && (
         <TooltipProvider>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-3 w-full">
-            {upgrades.map((upgrade) => {
+            {sortedUpgrades.map((upgrade) => {
               const costEntries =
                 upgrade.costs?.filter((c) => c.count > 0) ?? [];
               return (

@@ -1,10 +1,10 @@
 import { Router } from "./Router";
-import { Sidebar } from "@/features/Sidebar";
+import { NavBar } from "@/features/NavBar";
 
 const App = () => {
   return (
-    <div className="flex">
-      <Sidebar />
+    <div className="flex flex-col">
+      <NavBar />
       <Router />
     </div>
   );

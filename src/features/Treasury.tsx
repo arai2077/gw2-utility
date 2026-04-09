@@ -43,9 +43,7 @@ export const Treasury = () => {
           return nameA.localeCompare(nameB);
         }
         if (sortMode === "needed") {
-          const totalA = a.needed_by.reduce((sum, nb) => sum + nb.count, 0);
-          const totalB = b.needed_by.reduce((sum, nb) => sum + nb.count, 0);
-          return totalB - totalA;
+          return b.needed_by.length - a.needed_by.length;
         }
         return 0;
       })
@@ -91,7 +89,7 @@ export const Treasury = () => {
           <button
             key={opt.value}
             onClick={() => setSortMode(opt.value)}
-            className={`px-3 py-1 rounded-full text-sm border transition-colors ${
+            className={`px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer ${
               sortMode === opt.value
                 ? "bg-primary text-primary-foreground border-primary"
                 : "border-border text-muted-foreground hover:border-foreground"

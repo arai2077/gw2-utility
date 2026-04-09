@@ -17,10 +17,7 @@ function NavigationMenu({
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
       data-viewport={viewport}
-      className={cn(
-        "group/navigation-menu w-[200px] relative flex flex-col",
-        className,
-      )}
+      className={cn("group/navigation-menu w-[200px] flex", className)}
       {...props}
     >
       {children}
@@ -36,10 +33,7 @@ function NavigationMenuList({
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
-      className={cn(
-        "group flex flex-col list-none items-center justify-center gap-0",
-        className,
-      )}
+      className={cn("group h-full flex gap-4 items-center", className)}
       {...props}
     />
   );
@@ -52,7 +46,7 @@ function NavigationMenuItem({
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
-      className={cn("relative w-full", className)}
+      className={cn("w-full", className)}
       {...props}
     />
   );

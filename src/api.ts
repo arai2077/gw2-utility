@@ -1,11 +1,24 @@
-const API_KEY = import.meta.env.VITE_API_KEY;
+const getApiKey = (() => {
+  let cached: string | null = null;
+  return async () => {
+    if (cached) return cached;
+    const res = await fetch("https://gw2-utility.vercel.app/api/secrets");
+    const data = await res.json();
+    cached = data.apiKey;
+    return cached;
+  };
+})();
+
 const GUILD_ID = import.meta.env.VITE_GUILD_ID;
 
 const cache = new Map<string, unknown>();
 
 export const clearCache = () => cache.clear();
 
-const cached = async <T>(key: string, fetcher: () => Promise<T>): Promise<T> => {
+const cached = async <T>(
+  key: string,
+  fetcher: () => Promise<T>,
+): Promise<T> => {
   if (cache.has(key)) return cache.get(key) as T;
   const result = await fetcher();
   cache.set(key, result);
@@ -14,8 +27,9 @@ const cached = async <T>(key: string, fetcher: () => Promise<T>): Promise<T> => 
 
 export const getGuildTreasury = async () =>
   cached("treasury", async () => {
+    const apiKey = await getApiKey();
     const response = await fetch(
-      `/api/guild/${GUILD_ID}/treasury?access_token=${API_KEY}`,
+      `/api/guild/${GUILD_ID}/treasury?access_token=${apiKey}`,
     );
 
     if (!response.ok) {

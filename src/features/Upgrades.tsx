@@ -18,8 +18,10 @@ export const Upgrades = () => {
   const loading = useUpgradesStore((s) => s.loading);
   const error = useUpgradesStore((s) => s.error);
   const refresh = useTreasuryStore((s) => s.refresh);
+  const treasury = useTreasuryStore((s) => s.data);
   const items = useItemStore((s) => s.items);
   const itemMap = new Map(items?.map((i) => [i.id, i]));
+  const treasuryMap = new Map(treasury?.map((t) => [t.item_id, t.count]));
   const [sortMode, setSortMode] = useState<SortMode>("alphabetical");
 
   useEffect(() => {
@@ -146,8 +148,14 @@ export const Upgrades = () => {
                             cost.item_id != null
                               ? itemMap.get(cost.item_id)
                               : undefined;
+                          const hasEnough =
+                            cost.item_id != null &&
+                            (treasuryMap.get(cost.item_id) ?? 0) >= cost.count;
                           return (
-                            <div key={i} className="flex items-center gap-2">
+                            <div
+                              key={i}
+                              className={`flex items-center gap-2 ${hasEnough ? "text-green-400" : ""}`}
+                            >
                               {item?.icon && (
                                 <img
                                   src={item.icon}

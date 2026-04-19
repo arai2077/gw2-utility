@@ -27,7 +27,6 @@ export const Treasury = () => {
   }, []);
 
   const upgradeMap = new Map(upgrades?.map((u) => [u.id, u]));
-
   const itemMap = new Map(items?.map((item) => [item.id, item]));
 
   const sortedData = data
@@ -71,16 +70,17 @@ export const Treasury = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center gap-4">
-      <div className="flex justify-items-center gap-2">
-        <h1 className="text-lg font-semibold">Treasury</h1>
+    <div className="w-full flex flex-col items-center gap-6 px-6 py-8">
+      <div className="flex items-center gap-3">
+        <h1 className="text-lg font-semibold tracking-tight mb-0">Treasury</h1>
         <Button
           onClick={refresh}
           disabled={loading}
-          className="p-1 rounded hover:text-foreground disabled:opacity-50 transition-colors cursor-pointer"
+          variant="ghost"
+          size="sm"
           title="Refresh"
         >
-          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />{" "}
+          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           Refresh
         </Button>
       </div>
@@ -89,10 +89,10 @@ export const Treasury = () => {
           <button
             key={opt.value}
             onClick={() => setSortMode(opt.value)}
-            className={`px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer ${
+            className={`px-3 py-1 rounded-full text-sm transition-colors cursor-pointer ${
               sortMode === opt.value
-                ? "bg-primary text-primary-foreground border-primary"
-                : "border-border text-muted-foreground hover:border-foreground"
+                ? "bg-[linear-gradient(135deg,var(--primary),var(--primary-container))] text-on-primary font-medium"
+                : "bg-surface-container-high text-muted-foreground hover:text-foreground hover:bg-surface-bright"
             }`}
           >
             {opt.label}
@@ -100,7 +100,7 @@ export const Treasury = () => {
         ))}
       </div>
       {loading && (
-        <p className="flex items-center gap-2">
+        <p className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="animate-spin" size={16} />
           Loading...
         </p>
@@ -124,12 +124,15 @@ export const Treasury = () => {
                 .filter(
                   (e): e is { name: string; count: number } => e !== null,
                 );
+              const pct = Math.min(treasuryItem.count / totalNeeded, 1) * 100;
               return (
                 <Tooltip key={treasuryItem.item_id}>
                   <TooltipTrigger asChild>
                     <div
-                      className="flex flex-col items-center gap-2 rounded-lg border-2 p-3 text-center"
-                      style={{ borderColor: color }}
+                      className="flex flex-col items-center gap-2 rounded-xl p-3 text-center bg-card"
+                      style={{
+                        outline: `1px solid color-mix(in srgb, ${color} 20%, transparent)`,
+                      }}
                     >
                       {item?.icon && (
                         <img
@@ -147,11 +150,13 @@ export const Treasury = () => {
                       <span className="text-sm text-muted-foreground">
                         {treasuryItem.count} / {totalNeeded}
                       </span>
-                      <div className="w-full mt-auto h-1.5 rounded-full bg-muted overflow-hidden">
+                      <div className="w-full mt-auto h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-green-500"
+                          className="h-full rounded-full transition-all"
                           style={{
-                            width: `${Math.min(treasuryItem.count / totalNeeded, 1) * 100}%`,
+                            width: `${pct}%`,
+                            background: "var(--primary)",
+                            boxShadow: "0 0 4px var(--primary)",
                           }}
                         />
                       </div>
@@ -160,7 +165,10 @@ export const Treasury = () => {
                   {upgradeEntries.length > 0 && (
                     <TooltipContent
                       side="bottom"
-                      style={{ borderColor: color, borderWidth: 2 }}
+                      className="bg-surface-container backdrop-blur-md"
+                      style={{
+                        outline: `1px solid color-mix(in srgb, ${color} 25%, transparent)`,
+                      }}
                     >
                       <div className="flex flex-col gap-0.5">
                         {upgradeEntries.map(({ name, count }) => (

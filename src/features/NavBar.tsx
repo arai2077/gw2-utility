@@ -30,7 +30,7 @@ export const NavBar = () => {
         />
 
         {/* Desktop nav */}
-        <NavigationMenu className="hidden sm:flex">
+        <NavigationMenu className="hidden sm:flex w-auto">
           <NavigationMenuList>
             {navItems.map(({ to, icon: Icon, label }) => (
               <NavigationMenuItem key={to}>

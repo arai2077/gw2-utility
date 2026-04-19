@@ -119,10 +119,17 @@ export const Treasury = () => {
               const upgradeEntries = treasuryItem.needed_by
                 .map((nb) => {
                   const name = upgradeMap.get(nb.upgrade_id)?.name;
-                  return name ? { name, count: nb.count } : null;
+                  return name
+                    ? {
+                        name,
+                        count: nb.count,
+                        hasEnough: treasuryItem.count >= nb.count,
+                      }
+                    : null;
                 })
                 .filter(
-                  (e): e is { name: string; count: number } => e !== null,
+                  (e): e is { name: string; count: number; hasEnough: boolean } =>
+                    e !== null,
                 );
               const pct = Math.min(treasuryItem.count / totalNeeded, 1) * 100;
               return (
@@ -171,8 +178,8 @@ export const Treasury = () => {
                       }}
                     >
                       <div className="flex flex-col gap-0.5">
-                        {upgradeEntries.map(({ name, count }) => (
-                          <span key={name}>
+                        {upgradeEntries.map(({ name, count, hasEnough }) => (
+                          <span key={name} className={hasEnough ? "text-green-400" : ""}>
                             {name}: {count}
                           </span>
                         ))}

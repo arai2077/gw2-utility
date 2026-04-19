@@ -52,21 +52,22 @@ export const Upgrades = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center gap-4">
-      <div className="flex justify-items-center gap-2">
-        <h1 className="text-lg font-semibold">Upgrades</h1>
+    <div className="w-full flex flex-col items-center gap-6 px-6 py-8">
+      <div className="flex items-center gap-3">
+        <h1 className="text-lg font-semibold tracking-tight mb-0">Upgrades</h1>
         <Button
           onClick={refresh}
           disabled={loading}
-          className="p-1 rounded hover:text-foreground disabled:opacity-50 transition-colors cursor-pointer"
+          variant="ghost"
+          size="sm"
           title="Refresh"
         >
-          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />{" "}
+          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           Refresh
         </Button>
       </div>
       {loading && (
-        <p className="flex items-center gap-2">
+        <p className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="animate-spin" size={16} />
           Loading...
         </p>
@@ -77,10 +78,10 @@ export const Upgrades = () => {
           <button
             key={opt.value}
             onClick={() => setSortMode(opt.value)}
-            className={`px-3 py-1 rounded-full text-sm border transition-colors cursor-pointer ${
+            className={`px-3 py-1 rounded-full text-sm transition-colors cursor-pointer ${
               sortMode === opt.value
-                ? "bg-primary text-primary-foreground border-primary"
-                : "border-border text-muted-foreground hover:border-foreground"
+                ? "bg-[linear-gradient(135deg,var(--primary),var(--primary-container))] text-on-primary font-medium"
+                : "bg-surface-container-high text-muted-foreground hover:text-foreground hover:bg-surface-bright"
             }`}
           >
             {opt.label}
@@ -96,7 +97,7 @@ export const Upgrades = () => {
               return (
                 <Tooltip key={upgrade.id}>
                   <TooltipTrigger asChild>
-                    <div className="flex flex-col gap-2 rounded-lg border-2 p-4">
+                    <div className="flex flex-col gap-2 rounded-xl p-4 bg-card outline outline-1 outline-border">
                       <div className="flex items-center gap-3">
                         {upgrade.icon && (
                           <img
@@ -135,7 +136,10 @@ export const Upgrades = () => {
                     </div>
                   </TooltipTrigger>
                   {costEntries.length > 0 && (
-                    <TooltipContent side="bottom" style={{ borderWidth: 2 }}>
+                    <TooltipContent
+                      side="bottom"
+                      className="bg-surface-container backdrop-blur-md outline outline-1 outline-border"
+                    >
                       <div className="flex flex-col gap-1">
                         {costEntries.map((cost, i) => {
                           const item =

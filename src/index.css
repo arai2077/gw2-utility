@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/manrope";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: "Manrope Variable", sans-serif;
-  --font-sans: "Inter Variable", sans-serif;
+  --font-heading: "Space Grotesk Variable", sans-serif;
+  --font-sans: "Manrope Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,6 +48,17 @@
   --color-rarity-exotic: var(--rarity-exotic);
   --color-rarity-ascended: var(--rarity-ascended);
   --color-rarity-legendary: var(--rarity-legendary);
+  /* Design system surface tokens */
+  --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-bright: var(--surface-bright);
+  --color-outline-variant: var(--outline-variant);
+  --color-surface-tint: var(--surface-tint);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -60,12 +71,14 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(0.97 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
+  --primary-container: oklch(0.35 0 0);
+  --on-primary: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -90,42 +103,62 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --surface-container-lowest: oklch(0.96 0 0);
+  --surface-container-low: oklch(0.97 0 0);
+  --surface-container: oklch(0.96 0 0);
+  --surface-container-high: oklch(0.95 0 0);
+  --surface-container-highest: oklch(0.93 0 0);
+  --surface-bright: oklch(1 0 0);
+  --outline-variant: oklch(0.8 0 0);
+  --surface-tint: oklch(0.87 0 0);
 }
 
 .dark {
-  --background: oklch(0.1708 0.0103 285.25);
-  --foreground: oklch(0.9197 0.004 286.32);
-  --card: oklch(0.13 0.006 255);
-  --card-foreground: oklch(0.93 0.004 255);
-  --popover: oklch(0.13 0.006 255);
-  --popover-foreground: oklch(0.93 0.004 255);
-  --primary: oklch(0.6 0.18 250);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.19 0.007 255);
-  --secondary-foreground: oklch(0.93 0.004 255);
-  --muted: oklch(0.17 0.006 255);
-  --muted-foreground: oklch(0.58 0.008 255);
-  --accent: oklch(0.19 0.007 255);
-  --accent-foreground: oklch(0.93 0.004 255);
+  --background: #131313;
+  --foreground: #e5e2e1;
+  --card: #2a2a2a;
+  --card-foreground: #e5e2e1;
+  --popover: #252424;
+  --popover-foreground: #e5e2e1;
+  --primary: #f2ca50;
+  --primary-foreground: #1a1500;
+  --primary-container: #d4af37;
+  --on-primary: #1a1500;
+  --secondary: #a3c9ff;
+  --secondary-foreground: #131313;
+  --muted: #1c1b1b;
+  --muted-foreground: #8a8785;
+  --accent: #2a2a2a;
+  --accent-foreground: #e5e2e1;
   --destructive: oklch(0.65 0.22 22);
-  --border: oklch(1 0 0 / 9%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.6 0.18 250);
-  --chart-1: oklch(0.6 0.18 250);
-  --chart-2: oklch(0.65 0.16 180);
+  --border: rgba(77, 70, 53, 0.15);
+  --input: #1c1b1b;
+  --ring: #f2ca50;
+  --chart-1: #f2ca50;
+  --chart-2: #a3c9ff;
   --chart-3: oklch(0.65 0.16 140);
   --chart-4: oklch(0.65 0.18 310);
   --chart-5: oklch(0.65 0.2 22);
-  --sidebar: oklch(0.11 0.006 255);
-  --sidebar-foreground: oklch(0.93 0.004 255);
-  --sidebar-primary: oklch(0.6 0.18 250);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.17 0.006 255);
-  --sidebar-accent-foreground: oklch(0.93 0.004 255);
-  --sidebar-border: oklch(1 0 0 / 9%);
-  --sidebar-ring: oklch(0.6 0.18 250);
+  --sidebar: #1c1b1b;
+  --sidebar-foreground: #e5e2e1;
+  --sidebar-primary: #f2ca50;
+  --sidebar-primary-foreground: #1a1500;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #e5e2e1;
+  --sidebar-border: rgba(77, 70, 53, 0.15);
+  --sidebar-ring: #f2ca50;
+  /* surface hierarchy */
+  --surface-container-lowest: #0e0e0e;
+  --surface-container-low: #1c1b1b;
+  --surface-container: #252424;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #343333;
+  --surface-bright: #3a3939;
+  --outline-variant: #4d4635;
+  --surface-tint: #e9c349;
+  /* rarity */
   --rarity-junk: #aaaaaa;
-  --rarity-basic: var(--foreground);
+  --rarity-basic: #e5e2e1;
   --rarity-fine: #62a4da;
   --rarity-masterwork: #1a9306;
   --rarity-rare: #fcd00b;
@@ -150,7 +183,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading mb-4;
+    @apply font-heading mb-4 tracking-tight;
   }
   h1 {
     @apply text-4xl;
